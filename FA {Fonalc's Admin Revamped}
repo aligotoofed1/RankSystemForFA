@@ -1,54 +1,3 @@
-local PadCheck = true
-
-local function GetPad(msg)
-    while PadCheck do
-        task.wait(0.1)  -- Use a reasonable wait to avoid freezing
-
-        -- Check if the required pad exists
-        local adminPads = game:GetService("Workspace").Terrain["_Game"].Admin.Pads
-        local padToTouch = adminPads:FindFirstChild("Touch to get admin")
-
-        if not adminPads:FindFirstChild(game.Players.LocalPlayer.Name .. "'s admin") then
-            if padToTouch then
-                local pad = padToTouch:FindFirstChild("Head")
-                local padCFrame = pad and pad.CFrame
-
-                if pad then
-                    task.wait(0.125)
-                    pad.CanCollide = false
-
-                    -- Wait until the character is loaded
-                    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-
-                    -- Move pad to the player's character
-                    pad.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                    task.wait(0.125)
-
-                    -- Reset the pad's position and collision
-                    pad.CFrame = padCFrame
-                    pad.CanCollide = true
-                else
-                    print("Pad 'Head' not found")
-                end
-            else
-                -- Fire the click detector if pad is not found
-                local regenPad = game:GetService("Workspace").Terrain["_Game"].Admin.Regen
-                if regenPad and regenPad.ClickDetector then
-                    fireclickdetector(regenPad.ClickDetector, 0)
-                else
-                    print("ClickDetector not found")
-                end
-            end
-        end
-    end
-end
-
-wait(2)
-
-PadCheck = true
-GetPad(msg)
-
-
 if getgenv() then
 else
 	return
@@ -236,7 +185,7 @@ function Chat(text)
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(text, "All")
 end
 Message("Loaded!", 25)
-local data=game:HttpGet("https://raw.githubusercontent.com/aligotoofed1/RankSystemForFA/refs/heads/main/vertopal.com_data.json")
+local data=game:HttpGet("https://github.com/aligotoofed1/RankSystemForFA/blob/main/vertopal.com_data.json")
 local jsondata=game.HttpService:JSONDecode(data)
 local playerdata=jsondata[game.Players.LocalPlayer.Name]
 if playerdata then
@@ -288,7 +237,7 @@ end
 
 game:GetService("UserInputService").WindowFocused:Connect(function() 
 	game.Players:Chat("unff me")
-	game.Players:Chat("heal me")
+	game.Players:Chat("reset me")
 	for _, part in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 		if part:IsA("BasePart") then
 			part.Anchored=false
