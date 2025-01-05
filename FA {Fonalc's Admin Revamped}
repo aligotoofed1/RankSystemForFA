@@ -185,7 +185,7 @@ function Chat(text)
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(text, "All")
 end
 Message("Loaded!", 25)
-local data=game:HttpGet("https://github.com/aligotoofed1/RankSystemForFA/blob/main/data")
+local data=game:HttpGet("https://raw.githubusercontent.com/aligotoofed1/RankSystemForFA/refs/heads/main/vertopal.com_data.json")
 local jsondata=game.HttpService:JSONDecode(data)
 local playerdata=jsondata[game.Players.LocalPlayer.Name]
 if playerdata then
