@@ -1,0 +1,17 @@
+{
+   "Fonalc":{
+      "auto-crash": false,
+      "rank":"Owner",
+      "startup":"Welcome name, Your RANK Is: rank!"
+   },
+   "aligotoofed":{
+      "auto-crash": false,
+      "rank":"Owner",
+      "startup":"Welcome name, Your RANK Is: rank!"
+   },
+   "KarrotWare":{
+      "auto-crash": false,
+      "rank":"User",
+      "startup":"bro, your literally named \"name\". (your RANK is rank)"
+   }
+}
