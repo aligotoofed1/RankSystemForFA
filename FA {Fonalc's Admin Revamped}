@@ -1,24 +1,50 @@
+local PadCheck = true
+
 local function GetPad(msg)
-    while PadCheck == true do
-        task.wait(0)
-        if not game:GetService("Workspace").Terrain["_Game"].Admin.Pads:FindFirstChild(game.Players.LocalPlayer.Name .. "'s admin") then
-            if game:GetService("Workspace").Terrain["_Game"].Admin.Pads:FindFirstChild("Touch to get admin") then
-                local pad = game:GetService("Workspace").Terrain["_Game"].Admin.Pads:FindFirstChild("Touch to get admin"):FindFirstChild("Head")
-                local padCFrame = game:GetService("Workspace").Terrain["_Game"].Admin.Pads:FindFirstChild("Touch to get admin"):FindFirstChild("Head").CFrame
-                task.wait(0.125)
-                pad.CanCollide = false
-                repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                pad.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                task.wait(0.125)
-                pad.CFrame = padCFrame
-                pad.CanCollide = true
+    while PadCheck do
+        task.wait(0.1)  -- Use a reasonable wait to avoid freezing
+
+        -- Check if the required pad exists
+        local adminPads = game:GetService("Workspace").Terrain["_Game"].Admin.Pads
+        local padToTouch = adminPads:FindFirstChild("Touch to get admin")
+
+        if not adminPads:FindFirstChild(game.Players.LocalPlayer.Name .. "'s admin") then
+            if padToTouch then
+                local pad = padToTouch:FindFirstChild("Head")
+                local padCFrame = pad and pad.CFrame
+
+                if pad then
+                    task.wait(0.125)
+                    pad.CanCollide = false
+
+                    -- Wait until the character is loaded
+                    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+                    -- Move pad to the player's character
+                    pad.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    task.wait(0.125)
+
+                    -- Reset the pad's position and collision
+                    pad.CFrame = padCFrame
+                    pad.CanCollide = true
+                else
+                    print("Pad 'Head' not found")
+                end
             else
-                fireclickdetector(game:GetService("Workspace").Terrain["_Game"].Admin.Regen.ClickDetector, 0)
+                -- Fire the click detector if pad is not found
+                local regenPad = game:GetService("Workspace").Terrain["_Game"].Admin.Regen
+                if regenPad and regenPad.ClickDetector then
+                    fireclickdetector(regenPad.ClickDetector, 0)
+                else
+                    print("ClickDetector not found")
+                end
             end
         end
     end
 end
+
 wait(2)
+
 PadCheck = true
 GetPad(msg)
 
